@@ -1,0 +1,30 @@
+#!/bin/bash
+thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+opts=""
+while getopts m: opt; do
+   case $opt in
+     m) NERC_MODEL=$OPTARG
+        ;;
+     *) echo "Unknown option." 
+        exit 1
+        ;;
+    esac
+done
+#
+# model
+#
+if
+  [ "$naflang" == "nl" ]
+then
+  MOD_DEFAULT=nl/nl-6-class-clusters-sonar.bin
+else
+  MOD_DEFAULT=en/conll03/en-best-clusters-conll03.bin
+fi
+NERC_MODEL=${NERC_MODEL:-$MOD_DEFAULT}
+#
+# Run it
+#
+JARFILE=ixa-pipe-nerc-1.6.1-exec.jar
+cd $thisdir
+modelsdir=$thisdir/nerc-models-1.5.4
+java -Xmx1000m  -jar $JARFILE tag -m $modelsdir/$NERC_MODEL

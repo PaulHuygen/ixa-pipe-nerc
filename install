@@ -1,0 +1,15 @@
+#!/bin/bash
+# Install NERC
+thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $thisdir
+#
+# Resources
+#
+wget http://ixa2.si.ehu.es/ixa-pipes/models/nerc-models-1.5.4.tgz
+tar -xzf nerc-models-1.5.4.tgz
+rm nerc-models-1.5.4.tgz
+JARFILE=ixa-pipe-nerc-1.6.1-exec.jar
+mvn clean package
+mv target/$JARFILE .
+# rm -rf src
+# rm -rf target
