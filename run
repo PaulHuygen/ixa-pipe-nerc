@@ -27,4 +27,4 @@ NERC_MODEL=${NERC_MODEL:-$MOD_DEFAULT}
 JARFILE=ixa-pipe-nerc-1.6.1-exec.jar
 cd $thisdir
 modelsdir=$thisdir/nerc-models-1.5.4
-java -Xmx1000m  -jar $JARFILE tag -m $modelsdir/$NERC_MODEL
+java -Xmx2000m  -jar $JARFILE tag -m $modelsdir/$NERC_MODEL
