@@ -1,5 +1,5 @@
 #!/bin/bash
-modname=ixa-pipe-parse
+modname=ixa-pipe-nerc
 #
 # Find the path to this module
 #
