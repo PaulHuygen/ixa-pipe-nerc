@@ -1,5 +1,20 @@
 #!/bin/bash
-thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+modname=ixa-pipe-parse
+#
+# Find the path to this module
+#
+if
+  [ -z ${MODROOT+x} ]
+then
+  # Find out path ourselves
+  thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+else
+  thisdir=$MODROOT/$modname
+fi
+thisscript=${thisdir}/run
+#
+# Get command-line options
+#
 opts=""
 while getopts m: opt; do
    case $opt in
@@ -11,10 +26,25 @@ while getopts m: opt; do
     esac
 done
 #
-# model
+# Find the language
 #
 if
-  [ "$naflang" == "nl" ]
+  [ -z "${NAFLANG+x}" ]
+then
+  naffile=`mktemp -t naf.XXXXXX`
+  cat >$naffile
+  NAFLANG=`cat $naffile | python ${thisdir}/langdetect.py` 
+  export NAFLANG
+  cat $naffile | $thisscript
+  result=$?
+  rm $naffile
+  exit $result
+fi
+#
+# model selection
+#
+if
+  [ "$NAFLANG" == "nl" ]
 then
   MOD_DEFAULT=nl/nl-6-class-clusters-sonar.bin
 else
